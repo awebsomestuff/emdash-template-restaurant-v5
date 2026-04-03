@@ -1,0 +1,26 @@
+---
+import { getSiteSettings } from "emdash";
+
+const settings = await getSiteSettings();
+const title = settings?.title || "La Maison";
+const tagline = settings?.tagline || "French-inspired cuisine in the heart of the city";
+---
+<section class="hero">
+	<div class="hero-bg">
+		<img
+			src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&h=1080&fit=crop"
+			alt="Elegant restaurant interior with warm lighting"
+			loading="eager"
+		/>
+	</div>
+	<div class="hero-overlay"></div>
+	<div class="hero-content">
+		<p class="hero-tagline">Welcome to</p>
+		<h1 class="hero-title">{title}</h1>
+		<p class="hero-description">{tagline}</p>
+		<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+			<a href="/menu" class="btn btn-primary">View Our Menu</a>
+			<a href="/pages/reservations" class="btn btn-white">Make a Reservation</a>
+		</div>
+	</div>
+</section>

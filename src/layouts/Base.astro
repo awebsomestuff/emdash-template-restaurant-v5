@@ -1,0 +1,187 @@
+---
+import { getMenu, getSiteSettings } from "emdash";
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import "../styles/theme.css";
+
+interface Props {
+	title: string;
+	description?: string | null;
+	image?: string | null;
+	content?: { collection: string; id: string; slug?: string | null };
+	transparentHeader?: boolean;
+}
+
+const { title, description, image, content, transparentHeader = false } = Astro.props;
+const settings = await getSiteSettings();
+const menu = await getMenu("primary");
+const siteTitle = settings?.title || "La Maison";
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+
+const pageCtx = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: "website",
+	title: fullTitle,
+	description,
+	image,
+	content,
+});
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{fullTitle}</title>
+		{description && <meta name="description" content={description} />}
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<EmDashHead page={pageCtx} />
+		<script is:inline>
+			(function () {
+				var c = document.cookie;
+				var i = c.indexOf("theme=");
+				var theme = i >= 0 ? c.slice(i + 6).split(";")[0] : null;
+				if (theme === "light") {
+					document.documentElement.classList.add("light");
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<EmDashBodyStart page={pageCtx} />
+
+		<header class:list={["site-header", { scrolled: !transparentHeader }]} id="site-header">
+			<div class="header-inner">
+				<a href="/" class="site-logo">{siteTitle}</a>
+				<nav>
+					<ul class="nav-links" id="nav-links">
+						{menu?.items.map(item => (
+							<li><a href={item.url}>{item.label}</a></li>
+						))}
+						<li>
+							<button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+								<span id="theme-icon">&#9790;</span>
+							</button>
+						</li>
+					</ul>
+				</nav>
+				<button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
+			</div>
+		</header>
+
+		<main>
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<div class="container">
+				<div class="footer-grid">
+					<div class="footer-brand">
+						<a href="/" class="site-logo">{siteTitle}</a>
+						<p>{settings?.tagline || "French-inspired cuisine in the heart of the city"}</p>
+					</div>
+					<div class="footer-column">
+						<h4>Navigation</h4>
+						<ul>
+							{menu?.items.map(item => (
+								<li><a href={item.url}>{item.label}</a></li>
+							))}
+						</ul>
+					</div>
+					<div class="footer-column">
+						<h4>Hours</h4>
+						<ul>
+							<li>Mon - Fri: 12:00 - 22:00</li>
+							<li>Saturday: 11:00 - 23:00</li>
+							<li>Sunday: 11:00 - 21:00</li>
+						</ul>
+						<h4 style="margin-top: 1.5rem;">Contact</h4>
+						<ul>
+							<li>+1 (555) 123-4567</li>
+							<li>hello@lamaison.com</li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p>&copy; {new Date().getFullYear()} {siteTitle}. All rights reserved.</p>
+					<div class="social-links">
+						<a href="#" aria-label="Instagram">&#9679;</a>
+						<a href="#" aria-label="Facebook">&#9679;</a>
+						<a href="#" aria-label="Twitter">&#9679;</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<EmDashBodyEnd page={pageCtx} />
+
+		<script is:inline>
+			// Header scroll effect
+			(function() {
+				var header = document.getElementById('site-header');
+				if (!header) return;
+				var isTransparent = !header.classList.contains('scrolled');
+				if (isTransparent) {
+					window.addEventListener('scroll', function() {
+						if (window.scrollY > 50) {
+							header.classList.add('scrolled');
+						} else {
+							header.classList.remove('scrolled');
+						}
+					});
+				}
+			})();
+
+			// Mobile menu toggle
+			(function() {
+				var toggle = document.getElementById('mobile-toggle');
+				var nav = document.getElementById('nav-links');
+				if (toggle && nav) {
+					toggle.addEventListener('click', function() {
+						nav.classList.toggle('open');
+					});
+				}
+			})();
+
+			// Theme toggle
+			(function() {
+				var btn = document.getElementById('theme-toggle');
+				var icon = document.getElementById('theme-icon');
+				if (!btn) return;
+				function isLight() {
+					return document.documentElement.classList.contains('light');
+				}
+				function updateIcon() {
+					if (icon) icon.innerHTML = isLight() ? '&#9728;' : '&#9790;';
+				}
+				updateIcon();
+				btn.addEventListener('click', function() {
+					document.documentElement.classList.toggle('light');
+					var theme = isLight() ? 'light' : 'dark';
+					document.cookie = 'theme=' + theme + ';path=/;max-age=31536000';
+					updateIcon();
+				});
+			})();
+
+			// Scroll fade-in animation
+			(function() {
+				var els = document.querySelectorAll('.fade-in');
+				if (!els.length) return;
+				var observer = new IntersectionObserver(function(entries) {
+					entries.forEach(function(e) {
+						if (e.isIntersecting) {
+							e.target.classList.add('visible');
+							observer.unobserve(e.target);
+						}
+					});
+				}, { threshold: 0.1 });
+				els.forEach(function(el) { observer.observe(el); });
+			})();
+		</script>
+	</body>
+</html>

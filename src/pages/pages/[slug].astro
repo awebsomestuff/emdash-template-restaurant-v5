@@ -1,0 +1,37 @@
+---
+import { getEmDashEntry, getSeoMeta } from "emdash";
+import { PortableText } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import Base from "../../layouts/Base.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", slug);
+if (!page) return Astro.redirect("/404");
+
+Astro.cache.set(cacheHint);
+
+const seo = getSeoMeta(page, {
+	siteTitle: "La Maison",
+	siteUrl: Astro.url.origin,
+	path: `/pages/${slug}`,
+});
+---
+<Base
+	title={page.data.title}
+	description={seo.description}
+	content={{ collection: "pages", id: page.data.id, slug }}
+>
+	<div class="page-header">
+		<div class="container">
+			<h1 {...page.edit.title}>{page.data.title}</h1>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="page-content">
+			<PortableText value={page.data.content} />
+		</div>
+	</div>
+</Base>

@@ -1,0 +1,459 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "Restaurant",
+		"description": "An elegant restaurant template for EmDash CMS. Perfect for restaurants, cafes, and bars.",
+		"author": "EmDash Templates"
+	},
+	"settings": {
+		"title": "La Maison",
+		"tagline": "French-inspired cuisine in the heart of the city"
+	},
+	"collections": [
+		{
+			"slug": "menu_items",
+			"label": "Menu Items",
+			"labelSingular": "Menu Item",
+			"supports": ["drafts", "search"],
+			"fields": [
+				{ "slug": "name", "label": "Name", "type": "string", "required": true, "searchable": true },
+				{ "slug": "description", "label": "Description", "type": "text" },
+				{ "slug": "price", "label": "Price", "type": "string" },
+				{ "slug": "image", "label": "Image", "type": "image" },
+				{ "slug": "is_featured", "label": "Featured", "type": "boolean" }
+			]
+		},
+		{
+			"slug": "gallery_images",
+			"label": "Gallery",
+			"labelSingular": "Gallery Image",
+			"supports": ["drafts"],
+			"fields": [
+				{ "slug": "title", "label": "Title", "type": "string" },
+				{ "slug": "image", "label": "Image", "type": "image", "required": true },
+				{ "slug": "description", "label": "Description", "type": "text" }
+			]
+		},
+		{
+			"slug": "testimonials",
+			"label": "Testimonials",
+			"labelSingular": "Testimonial",
+			"supports": ["drafts"],
+			"fields": [
+				{ "slug": "quote", "label": "Quote", "type": "text", "required": true },
+				{ "slug": "author_name", "label": "Author Name", "type": "string", "required": true },
+				{ "slug": "rating", "label": "Rating (1-5)", "type": "integer" }
+			]
+		},
+		{
+			"slug": "pages",
+			"label": "Pages",
+			"labelSingular": "Page",
+			"supports": ["drafts", "revisions", "search", "seo"],
+			"fields": [
+				{ "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+				{ "slug": "content", "label": "Content", "type": "portableText", "searchable": true }
+			]
+		}
+	],
+	"taxonomies": [
+		{
+			"name": "menu_category",
+			"label": "Menu Categories",
+			"labelSingular": "Menu Category",
+			"hierarchical": true,
+			"collections": ["menu_items"],
+			"terms": [
+				{ "slug": "starters", "label": "Starters" },
+				{ "slug": "mains", "label": "Mains" },
+				{ "slug": "desserts", "label": "Desserts" },
+				{ "slug": "drinks", "label": "Drinks" }
+			]
+		}
+	],
+	"menus": [
+		{
+			"name": "primary",
+			"label": "Primary Navigation",
+			"items": [
+				{ "type": "custom", "label": "Home", "url": "/" },
+				{ "type": "custom", "label": "Menu", "url": "/menu" },
+				{ "type": "custom", "label": "Gallery", "url": "/gallery" },
+				{ "type": "custom", "label": "Reservations", "url": "/pages/reservations" },
+				{ "type": "custom", "label": "About", "url": "/pages/about" }
+			]
+		}
+	],
+	"widgetAreas": [
+		{
+			"name": "footer",
+			"label": "Footer",
+			"description": "Footer widget area with restaurant info",
+			"widgets": [
+				{
+					"type": "content",
+					"title": "About La Maison",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [{ "_type": "span", "text": "La Maison is a French-inspired restaurant offering seasonal dishes crafted with the finest local ingredients. Join us for an unforgettable dining experience." }]
+						}
+					]
+				}
+			]
+		}
+	],
+	"content": {
+		"menu_items": [
+			{
+				"id": "mi-01",
+				"slug": "french-onion-soup",
+				"status": "published",
+				"data": {
+					"name": "French Onion Soup",
+					"description": "Slow-cooked caramelized onions in a rich beef broth, topped with a crusty crouton and melted Gruyere cheese.",
+					"price": "$14",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&h=600&fit=crop", "alt": "French onion soup with melted cheese", "filename": "french-onion-soup.jpg" } },
+					"is_featured": true
+				},
+				"taxonomies": { "menu_category": ["starters"] }
+			},
+			{
+				"id": "mi-02",
+				"slug": "tuna-tartare",
+				"status": "published",
+				"data": {
+					"name": "Tuna Tartare",
+					"description": "Fresh ahi tuna with avocado, sesame, ginger, and a citrus soy dressing. Served with crispy wonton chips.",
+					"price": "$18",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=600&h=600&fit=crop", "alt": "Tuna tartare plated elegantly", "filename": "tuna-tartare.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["starters"] }
+			},
+			{
+				"id": "mi-03",
+				"slug": "escargots-de-bourgogne",
+				"status": "published",
+				"data": {
+					"name": "Escargots de Bourgogne",
+					"description": "Classic Burgundy snails baked in garlic-parsley butter, served with crusty bread for dipping.",
+					"price": "$16",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1604909052743-94e838986d24?w=600&h=600&fit=crop", "alt": "Escargots in garlic butter", "filename": "escargots.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["starters"] }
+			},
+			{
+				"id": "mi-04",
+				"slug": "duck-confit",
+				"status": "published",
+				"data": {
+					"name": "Duck Confit",
+					"description": "Slow-cooked duck leg, crispy skin, served with lentils du Puy, roasted garlic, and a red wine jus.",
+					"price": "$34",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1432139509613-5c4255a1d916?w=600&h=600&fit=crop", "alt": "Duck confit with crispy golden skin", "filename": "duck-confit.jpg" } },
+					"is_featured": true
+				},
+				"taxonomies": { "menu_category": ["mains"] }
+			},
+			{
+				"id": "mi-05",
+				"slug": "filet-mignon",
+				"status": "published",
+				"data": {
+					"name": "Filet Mignon au Poivre",
+					"description": "8oz center-cut filet with cracked peppercorn crust, cognac cream sauce, and pommes puree.",
+					"price": "$42",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1558030006-450675393462?w=600&h=600&fit=crop", "alt": "Filet mignon with peppercorn sauce", "filename": "filet-mignon.jpg" } },
+					"is_featured": true
+				},
+				"taxonomies": { "menu_category": ["mains"] }
+			},
+			{
+				"id": "mi-06",
+				"slug": "bouillabaisse",
+				"status": "published",
+				"data": {
+					"name": "Bouillabaisse",
+					"description": "Traditional Provencal seafood stew with mussels, shrimp, white fish, and saffron-tomato broth. Served with rouille and grilled bread.",
+					"price": "$38",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&h=600&fit=crop", "alt": "Seafood bouillabaisse stew", "filename": "bouillabaisse.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["mains"] }
+			},
+			{
+				"id": "mi-07",
+				"slug": "coq-au-vin",
+				"status": "published",
+				"data": {
+					"name": "Coq au Vin",
+					"description": "Braised chicken in Burgundy wine with pearl onions, mushrooms, and lardons. A timeless French classic.",
+					"price": "$32",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&h=600&fit=crop", "alt": "Coq au vin braised chicken dish", "filename": "coq-au-vin.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["mains"] }
+			},
+			{
+				"id": "mi-08",
+				"slug": "pan-seared-salmon",
+				"status": "published",
+				"data": {
+					"name": "Pan-Seared Salmon",
+					"description": "Atlantic salmon with crispy skin, beurre blanc, asparagus, and fingerling potatoes.",
+					"price": "$36",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&h=600&fit=crop", "alt": "Pan-seared salmon fillet", "filename": "salmon.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["mains"] }
+			},
+			{
+				"id": "mi-09",
+				"slug": "creme-brulee",
+				"status": "published",
+				"data": {
+					"name": "Creme Brulee",
+					"description": "Classic vanilla bean custard with a caramelized sugar crust. Simple, elegant, perfect.",
+					"price": "$12",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&h=600&fit=crop", "alt": "Creme brulee with caramelized top", "filename": "creme-brulee.jpg" } },
+					"is_featured": true
+				},
+				"taxonomies": { "menu_category": ["desserts"] }
+			},
+			{
+				"id": "mi-10",
+				"slug": "chocolate-fondant",
+				"status": "published",
+				"data": {
+					"name": "Chocolate Fondant",
+					"description": "Warm dark chocolate cake with a molten center, served with vanilla ice cream and gold leaf.",
+					"price": "$14",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=600&h=600&fit=crop", "alt": "Chocolate fondant with molten center", "filename": "chocolate-fondant.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["desserts"] }
+			},
+			{
+				"id": "mi-11",
+				"slug": "tarte-tatin",
+				"status": "published",
+				"data": {
+					"name": "Tarte Tatin",
+					"description": "Upside-down caramelized apple tart with flaky puff pastry and Chantilly cream.",
+					"price": "$13",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1562007908-17c67e878c88?w=600&h=600&fit=crop", "alt": "French apple tarte tatin", "filename": "tarte-tatin.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["desserts"] }
+			},
+			{
+				"id": "mi-12",
+				"slug": "french-75",
+				"status": "published",
+				"data": {
+					"name": "French 75",
+					"description": "Gin, fresh lemon juice, simple syrup, topped with champagne. Effervescent and timeless.",
+					"price": "$16",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&h=600&fit=crop", "alt": "French 75 cocktail in champagne flute", "filename": "french-75.jpg" } },
+					"is_featured": true
+				},
+				"taxonomies": { "menu_category": ["drinks"] }
+			},
+			{
+				"id": "mi-13",
+				"slug": "bordeaux-rouge",
+				"status": "published",
+				"data": {
+					"name": "Bordeaux Rouge",
+					"description": "A curated selection from Saint-Emilion. Rich, full-bodied, with notes of dark cherry and cedar.",
+					"price": "$18",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&h=600&fit=crop", "alt": "Glass of red Bordeaux wine", "filename": "bordeaux-rouge.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["drinks"] }
+			},
+			{
+				"id": "mi-14",
+				"slug": "espresso-martini",
+				"status": "published",
+				"data": {
+					"name": "Espresso Martini",
+					"description": "Vodka, fresh espresso, coffee liqueur, and vanilla. A bold ending or a spirited beginning.",
+					"price": "$15",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&h=600&fit=crop", "alt": "Espresso martini cocktail", "filename": "espresso-martini.jpg" } },
+					"is_featured": false
+				},
+				"taxonomies": { "menu_category": ["drinks"] }
+			}
+		],
+		"gallery_images": [
+			{
+				"id": "gi-01",
+				"slug": "restaurant-interior",
+				"status": "published",
+				"data": {
+					"title": "The Dining Room",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900&h=900&fit=crop", "alt": "Elegant restaurant dining room with warm lighting", "filename": "dining-room.jpg" } },
+					"description": "Our main dining room seats 60 guests in an atmosphere of warmth and sophistication."
+				}
+			},
+			{
+				"id": "gi-02",
+				"slug": "kitchen-action",
+				"status": "published",
+				"data": {
+					"title": "The Kitchen",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=900&h=900&fit=crop", "alt": "Chef at work in a professional kitchen", "filename": "kitchen.jpg" } },
+					"description": "Where the magic happens. Our open kitchen lets you watch the culinary artistry unfold."
+				}
+			},
+			{
+				"id": "gi-03",
+				"slug": "plated-dish",
+				"status": "published",
+				"data": {
+					"title": "The Art of Plating",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&h=900&fit=crop", "alt": "Beautifully plated fine dining dish", "filename": "plating.jpg" } },
+					"description": "Every dish is a canvas. Our chefs take pride in presentation as much as flavor."
+				}
+			},
+			{
+				"id": "gi-04",
+				"slug": "wine-cellar",
+				"status": "published",
+				"data": {
+					"title": "The Wine Cellar",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=900&h=900&fit=crop", "alt": "Wine bottles in a rustic cellar", "filename": "wine-cellar.jpg" } },
+					"description": "Over 200 labels from France and beyond. Our sommelier will guide your pairing."
+				}
+			},
+			{
+				"id": "gi-05",
+				"slug": "terrace",
+				"status": "published",
+				"data": {
+					"title": "The Terrace",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=900&h=900&fit=crop", "alt": "Outdoor restaurant terrace with string lights", "filename": "terrace.jpg" } },
+					"description": "Al fresco dining under the stars. Available seasonally from May through October."
+				}
+			},
+			{
+				"id": "gi-06",
+				"slug": "dessert-close-up",
+				"status": "published",
+				"data": {
+					"title": "Sweet Finales",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&h=900&fit=crop", "alt": "Elegant dessert with berries and chocolate", "filename": "dessert.jpg" } },
+					"description": "Our pastry chef creates desserts that are as stunning to look at as they are to taste."
+				}
+			},
+			{
+				"id": "gi-07",
+				"slug": "bar-area",
+				"status": "published",
+				"data": {
+					"title": "The Bar",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=900&h=900&fit=crop", "alt": "Stylish cocktail bar with ambient lighting", "filename": "bar.jpg" } },
+					"description": "Craft cocktails and aperitifs. The perfect place to begin or end your evening."
+				}
+			},
+			{
+				"id": "gi-08",
+				"slug": "fresh-ingredients",
+				"status": "published",
+				"data": {
+					"title": "Farm to Table",
+					"image": { "$media": { "url": "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=900&h=900&fit=crop", "alt": "Fresh vegetables and herbs from local farms", "filename": "ingredients.jpg" } },
+					"description": "We source directly from local farms and markets to ensure the freshest ingredients."
+				}
+			}
+		],
+		"testimonials": [
+			{
+				"id": "test-01",
+				"slug": "sophie-martin",
+				"status": "published",
+				"data": {
+					"quote": "An extraordinary dining experience. The duck confit was the best I've had outside of Paris. The ambiance, the service, every detail was perfect.",
+					"author_name": "Sophie Martin",
+					"rating": 5
+				}
+			},
+			{
+				"id": "test-02",
+				"slug": "james-chen",
+				"status": "published",
+				"data": {
+					"quote": "We celebrated our anniversary here and it was unforgettable. The tasting menu was a journey through French cuisine at its finest. Highly recommended.",
+					"author_name": "James Chen",
+					"rating": 5
+				}
+			},
+			{
+				"id": "test-03",
+				"slug": "emily-davis",
+				"status": "published",
+				"data": {
+					"quote": "The attention to detail is remarkable. From the amuse-bouche to the petit fours, every course showed real passion and craftsmanship. A gem in the city.",
+					"author_name": "Emily Davis",
+					"rating": 4
+				}
+			},
+			{
+				"id": "test-04",
+				"slug": "michael-ross",
+				"status": "published",
+				"data": {
+					"quote": "La Maison has become our go-to for special occasions. The wine selection is outstanding and the sommelier's recommendations are always spot-on.",
+					"author_name": "Michael Ross",
+					"rating": 5
+				}
+			}
+		],
+		"pages": [
+			{
+				"id": "about",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "About La Maison",
+					"content": [
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "La Maison was born from a simple dream: to bring the warmth, elegance, and soul of French countryside dining to the heart of the city. Since opening our doors in 2010, we have been committed to creating memorable experiences through food, atmosphere, and genuine hospitality." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Our Chef" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Chef Antoine Duval trained in some of the finest kitchens across Lyon and Paris before bringing his vision to La Maison. His philosophy is rooted in respect for ingredients, classical technique, and a touch of modern creativity. Every dish on our menu reflects his dedication to the craft and his deep love for French culinary tradition." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Our Ingredients" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "We believe great food starts at the source. We work directly with local farms, fisheries, and artisan producers to ensure the freshest seasonal ingredients make it to your plate. Our menu changes with the seasons, reflecting what's at its peak and what inspires our kitchen team." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "The Space" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Our dining room blends rustic charm with modern sophistication. Exposed brick, warm lighting, and carefully curated details create an atmosphere that feels both intimate and celebratory. Whether you're joining us for a quiet dinner for two or a lively gathering with friends, La Maison is designed to make every occasion feel special." }] },
+						{ "_type": "block", "style": "blockquote", "children": [{ "_type": "span", "text": "Cooking is an act of love, a gift, a way of sharing with others the little secrets that are whispered to you by the stoves of the world." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Private Events" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Our private dining room accommodates up to 24 guests, perfect for celebrations, corporate dinners, and intimate gatherings. We offer customized menus and wine pairings tailored to your event. Contact us to discuss your next special occasion." }] }
+					]
+				}
+			},
+			{
+				"id": "reservations",
+				"slug": "reservations",
+				"status": "published",
+				"data": {
+					"title": "Reservations",
+					"content": [
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "We warmly welcome reservations to ensure the best experience for all our guests. While walk-ins are always welcome based on availability, we recommend booking in advance, especially for weekend evenings and special occasions." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "How to Reserve" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "You can make a reservation by calling us at +1 (555) 123-4567, sending an email to reservations@lamaison.com, or using the reservation form on this page. We will confirm your booking within 24 hours." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Cancellation Policy" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "We kindly ask that you notify us at least 24 hours in advance if you need to cancel or modify your reservation. This allows us to accommodate other guests who may be waiting for a table." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Large Parties" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "For groups of 8 or more, please contact us directly by phone so we can arrange the perfect setting for your gathering. Our private dining room is available for parties of up to 24 guests." }] },
+						{ "_type": "block", "style": "h2", "children": [{ "_type": "span", "text": "Dietary Requirements" }] },
+						{ "_type": "block", "style": "normal", "children": [{ "_type": "span", "text": "Please let us know about any dietary restrictions or allergies when making your reservation. Our kitchen is happy to accommodate vegetarian, vegan, gluten-free, and other dietary needs with advance notice." }] }
+					]
+				}
+			}
+		]
+	}
+}

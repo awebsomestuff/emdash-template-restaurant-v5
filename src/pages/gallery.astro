@@ -1,0 +1,46 @@
+---
+import { getEmDashCollection } from "emdash";
+import { Image } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+
+const { entries: images, cacheHint } = await getEmDashCollection("gallery_images");
+Astro.cache.set(cacheHint);
+---
+<Base title="Gallery" description="A visual journey through La Maison — our dishes, our space, our passion.">
+	<div class="page-header">
+		<div class="container">
+			<p class="section-subtitle">Gallery</p>
+			<h1>Our World in Pictures</h1>
+		</div>
+	</div>
+
+	<section class="section">
+		<div class="container">
+			{images.length > 0 ? (
+				<div class="gallery-grid">
+					{images.map(img => (
+						<div class="gallery-item">
+							<Image image={img.data.image} />
+							{(img.data.title || img.data.description) && (
+								<div class="gallery-item-overlay">
+									<div>
+										{img.data.title && <span class="gallery-item-title">{img.data.title}</span>}
+										{img.data.description && (
+											<p style="color: rgba(255,255,255,0.8); font-size: 0.875rem; margin-top: 0.25rem;">{img.data.description}</p>
+										)}
+									</div>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			) : (
+				<div style="text-align: center; padding: 3rem;">
+					<p style="color: var(--color-text-muted);">
+						No photos yet. <a href="/_emdash/admin/content/gallery_images/new">Add your first photo</a>
+					</p>
+				</div>
+			)}
+		</div>
+	</section>
+</Base>

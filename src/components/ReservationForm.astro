@@ -1,0 +1,76 @@
+---
+---
+<section class="section section-dark section-center fade-in" id="reservations">
+	<div class="container">
+		<p class="section-subtitle">Reservations</p>
+		<h2 class="section-title">Book Your Table</h2>
+		<p class="section-description">
+			We recommend reserving in advance, especially for weekend evenings. For parties of 8 or more, please call us directly.
+		</p>
+		<div class="divider">
+			<div class="divider-diamond"></div>
+		</div>
+		<div class="reservation-wrapper">
+			<form class="reservation-form" onsubmit="return false;">
+				<div class="form-group">
+					<label for="res-name">Full Name</label>
+					<input type="text" id="res-name" placeholder="John Doe" />
+				</div>
+				<div class="form-group">
+					<label for="res-phone">Phone</label>
+					<input type="tel" id="res-phone" placeholder="+1 (555) 000-0000" />
+				</div>
+				<div class="form-group">
+					<label for="res-date">Date</label>
+					<input type="date" id="res-date" />
+				</div>
+				<div class="form-group">
+					<label for="res-time">Time</label>
+					<select id="res-time">
+						<option value="">Select a time</option>
+						<option>12:00</option>
+						<option>12:30</option>
+						<option>13:00</option>
+						<option>13:30</option>
+						<option>19:00</option>
+						<option>19:30</option>
+						<option>20:00</option>
+						<option>20:30</option>
+						<option>21:00</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="res-guests">Number of Guests</label>
+					<select id="res-guests">
+						<option>1 Guest</option>
+						<option>2 Guests</option>
+						<option>3 Guests</option>
+						<option>4 Guests</option>
+						<option>5 Guests</option>
+						<option>6 Guests</option>
+						<option>7 Guests</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="res-occasion">Occasion</label>
+					<select id="res-occasion">
+						<option value="">Select (optional)</option>
+						<option>Birthday</option>
+						<option>Anniversary</option>
+						<option>Business Dinner</option>
+						<option>Date Night</option>
+						<option>Other</option>
+					</select>
+				</div>
+				<div class="form-group full-width">
+					<label for="res-notes">Special Requests</label>
+					<textarea id="res-notes" placeholder="Dietary requirements, seating preferences, etc."></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Request Reservation</button>
+			</form>
+			<p style="margin-top: 1.5rem; font-size: 0.8125rem; color: var(--color-text-muted);">
+				This is a demo form. In production, connect it to your preferred reservation system.
+			</p>
+		</div>
+	</div>
+</section>

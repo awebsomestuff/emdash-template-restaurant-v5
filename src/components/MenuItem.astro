@@ -1,0 +1,28 @@
+---
+import { Image } from "emdash/ui";
+
+interface Props {
+	item: any;
+}
+
+const { item } = Astro.props;
+---
+<div class="menu-item">
+	{item.data.image && (
+		<div class="menu-item-image">
+			<Image image={item.data.image} />
+		</div>
+	)}
+	<div class="menu-item-content">
+		<div class="menu-item-header">
+			<span class="menu-item-name">{item.data.name}</span>
+			{item.data.price && <span class="menu-item-price">{item.data.price}</span>}
+		</div>
+		{item.data.description && (
+			<p class="menu-item-description">{item.data.description}</p>
+		)}
+		{item.data.is_featured && (
+			<span class="menu-item-badge">Chef's Pick</span>
+		)}
+	</div>
+</div>

@@ -1,0 +1,38 @@
+---
+import { getEmDashCollection } from "emdash";
+
+const { entries: testimonials } = await getEmDashCollection("testimonials");
+
+function renderStars(rating: number): string {
+	return '\u2605'.repeat(Math.min(rating, 5)) + '\u2606'.repeat(Math.max(0, 5 - rating));
+}
+---
+<section class="section section-dark section-center fade-in" id="testimonials">
+	<div class="container">
+		<p class="section-subtitle">Testimonials</p>
+		<h2 class="section-title">What Our Guests Say</h2>
+		<p class="section-description">
+			The true measure of our craft is the joy it brings to those we serve.
+		</p>
+		<div class="divider">
+			<div class="divider-diamond"></div>
+		</div>
+		{testimonials.length > 0 ? (
+			<div class="testimonials-grid">
+				{testimonials.map(t => (
+					<div class="testimonial-card">
+						{t.data.rating && (
+							<div class="testimonial-stars">{renderStars(t.data.rating)}</div>
+						)}
+						<p class="testimonial-quote">{t.data.quote}</p>
+						<span class="testimonial-author">{t.data.author_name}</span>
+					</div>
+				))}
+			</div>
+		) : (
+			<p style="color: var(--color-text-muted);">
+				Testimonials coming soon. <a href="/_emdash/admin/content/testimonials/new">Add your first review</a>
+			</p>
+		)}
+	</div>
+</section>

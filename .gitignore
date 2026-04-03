@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.emdash/
+.wrangler/
+.dev.vars
+*.db
+*.db-journal
+data.db
+uploads/

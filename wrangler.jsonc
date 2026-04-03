@@ -1,0 +1,25 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "emdash-template-restaurant-v5",
+	"main": "./src/worker.ts",
+	"compatibility_date": "2026-03-29",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "emdash-template-restaurant","database_id": "29a9ed03-5ba3-4a5b-83ea-3d8bed6733b2"
+			// Run `wrangler d1 create emdash-template-restaurant` and paste the ID here
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "emdash-template-restaurant-media","preview_bucket_name": "emdash-template-restaurant-media"
+		}
+	],
+	"observability": {
+		"enabled": true
+	}
+}

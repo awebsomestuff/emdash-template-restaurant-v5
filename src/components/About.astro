@@ -1,0 +1,33 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = "Our Story",
+	description = "Founded in 2010, La Maison brings the warmth and elegance of French countryside dining to the city. Every dish tells a story of tradition, passion, and the finest seasonal ingredients sourced from local farms and artisan producers."
+} = Astro.props;
+---
+<section class="section fade-in" id="about">
+	<div class="container">
+		<div class="about-grid">
+			<div class="about-image">
+				<img
+					src="https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=800&h=1000&fit=crop"
+					alt="Chef preparing a fine dining dish"
+					loading="lazy"
+				/>
+			</div>
+			<div class="about-text">
+				<p class="section-subtitle">About Us</p>
+				<h2 class="section-title">{title}</h2>
+				<p>{description}</p>
+				<p>Our chef, trained in the kitchens of Lyon and Paris, creates dishes that honor classic French techniques while embracing modern creativity. Each plate is a celebration of flavor, texture, and artistry.</p>
+				<div style="margin-top: 2rem;">
+					<a href="/pages/about" class="btn btn-outline">Read More</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,46 @@
+---
+import { getEmDashCollection } from "emdash";
+import { Image } from "emdash/ui";
+
+interface Props {
+	limit?: number;
+}
+
+const { limit = 6 } = Astro.props;
+const { entries: images } = await getEmDashCollection("gallery_images", { limit });
+---
+<section class="section section-center fade-in" id="gallery-preview">
+	<div class="container">
+		<p class="section-subtitle">Gallery</p>
+		<h2 class="section-title">A Glimpse Inside</h2>
+		<p class="section-description">
+			The ambiance, the artistry, and the moments that make La Maison unforgettable.
+		</p>
+		<div class="divider">
+			<div class="divider-diamond"></div>
+		</div>
+		{images.length > 0 ? (
+			<div class="gallery-grid">
+				{images.map(img => (
+					<div class="gallery-item">
+						<Image image={img.data.image} />
+						{img.data.title && (
+							<div class="gallery-item-overlay">
+								<span class="gallery-item-title">{img.data.title}</span>
+							</div>
+						)}
+					</div>
+				))}
+			</div>
+		) : (
+			<p style="color: var(--color-text-muted);">
+				Gallery photos coming soon. <a href="/_emdash/admin/content/gallery_images/new">Add your first photo</a>
+			</p>
+		)}
+		{images.length > 0 && (
+			<div style="margin-top: 3rem;">
+				<a href="/gallery" class="btn btn-outline">View All Photos</a>
+			</div>
+		)}
+	</div>
+</section>

@@ -1,0 +1,33 @@
+---
+import { getEmDashCollection, getEntryTerms } from "emdash";
+import MenuItem from "./MenuItem.astro";
+
+const { entries: menuItems, cacheHint } = await getEmDashCollection("menu_items");
+
+const featured = menuItems.filter(item => item.data.is_featured);
+const itemsToShow = featured.length > 0 ? featured.slice(0, 6) : menuItems.slice(0, 6);
+---
+<section class="section section-dark section-center fade-in" id="menu-preview">
+	<div class="container">
+		<p class="section-subtitle">Our Menu</p>
+		<h2 class="section-title">Signature Dishes</h2>
+		<p class="section-description">
+			A curated selection of our most beloved creations, crafted with passion and the finest ingredients.
+		</p>
+		<div class="divider">
+			<div class="divider-diamond"></div>
+		</div>
+		{itemsToShow.length > 0 ? (
+			<div class="menu-grid" style="margin-bottom: 3rem;">
+				{itemsToShow.map(item => (
+					<MenuItem item={item} />
+				))}
+			</div>
+		) : (
+			<p style="color: var(--color-text-muted); margin-bottom: 3rem;">
+				Menu items coming soon. <a href="/_emdash/admin/content/menu_items/new">Add your first dish</a>
+			</p>
+		)}
+		<a href="/menu" class="btn btn-outline">View Full Menu</a>
+	</div>
+</section>

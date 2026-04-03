@@ -1,0 +1,96 @@
+---
+import { getEmDashCollection, getTaxonomyTerms, getEntryTerms } from "emdash";
+import Base from "../layouts/Base.astro";
+import MenuItem from "../components/MenuItem.astro";
+
+const { entries: menuItems, cacheHint } = await getEmDashCollection("menu_items");
+Astro.cache.set(cacheHint);
+
+const terms = await getTaxonomyTerms("menu_category");
+
+const itemsByCategory: Record<string, any[]> = {};
+for (const item of menuItems) {
+	const cats = await getEntryTerms("menu_items", item.data.id, "menu_category");
+	if (cats.length > 0) {
+		for (const cat of cats) {
+			if (!itemsByCategory[cat.slug]) itemsByCategory[cat.slug] = [];
+			itemsByCategory[cat.slug].push(item);
+		}
+	} else {
+		if (!itemsByCategory["uncategorized"]) itemsByCategory["uncategorized"] = [];
+		itemsByCategory["uncategorized"].push(item);
+	}
+}
+
+const categoryOrder = terms.map(t => t.slug);
+---
+<Base title="Menu" description="Explore our full menu of French-inspired dishes, from starters to desserts and cocktails.">
+	<div class="page-header">
+		<div class="container">
+			<p class="section-subtitle">Our Menu</p>
+			<h1>La Carte</h1>
+		</div>
+	</div>
+
+	<section class="section">
+		<div class="container">
+			{terms.length > 0 && (
+				<div class="menu-tabs" id="menu-tabs">
+					<button class="menu-tab active" data-category="all">All</button>
+					{terms.map(term => (
+						<button class="menu-tab" data-category={term.slug}>{term.label}</button>
+					))}
+				</div>
+			)}
+
+			<div id="menu-container">
+				{categoryOrder.map(slug => {
+					const term = terms.find(t => t.slug === slug);
+					const items = itemsByCategory[slug] || [];
+					if (items.length === 0) return null;
+					return (
+						<div class="menu-category-group" data-category={slug}>
+							<h2 style="text-align: center; margin-bottom: 2rem;">{term?.label || slug}</h2>
+							<div class="menu-grid" style="margin-bottom: 3rem;">
+								{items.map(item => (
+									<MenuItem item={item} />
+								))}
+							</div>
+						</div>
+					);
+				})}
+			</div>
+
+			{menuItems.length === 0 && (
+				<div style="text-align: center; padding: 3rem;">
+					<p style="color: var(--color-text-muted);">
+						No menu items yet. <a href="/_emdash/admin/content/menu_items/new">Add your first dish</a>
+					</p>
+				</div>
+			)}
+		</div>
+	</section>
+</Base>
+
+<script is:inline>
+	(function() {
+		var tabs = document.querySelectorAll('.menu-tab');
+		var groups = document.querySelectorAll('.menu-category-group');
+		if (!tabs.length) return;
+
+		tabs.forEach(function(tab) {
+			tab.addEventListener('click', function() {
+				tabs.forEach(function(t) { t.classList.remove('active'); });
+				tab.classList.add('active');
+				var cat = tab.getAttribute('data-category');
+				groups.forEach(function(g) {
+					if (cat === 'all' || g.getAttribute('data-category') === cat) {
+						g.style.display = '';
+					} else {
+						g.style.display = 'none';
+					}
+				});
+			});
+		});
+	})();
+</script>

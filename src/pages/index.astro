@@ -1,0 +1,27 @@
+---
+import { getEmDashCollection } from "emdash";
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import MenuSection from "../components/MenuSection.astro";
+import Gallery from "../components/Gallery.astro";
+import Testimonials from "../components/Testimonials.astro";
+import Info from "../components/Info.astro";
+import ReservationForm from "../components/ReservationForm.astro";
+
+const { cacheHint } = await getEmDashCollection("menu_items", { limit: 1 });
+Astro.cache.set(cacheHint);
+---
+<Base
+	title="La Maison"
+	description="French-inspired cuisine in the heart of the city. Discover our menu, gallery, and book your table."
+	transparentHeader={true}
+>
+	<Hero />
+	<About />
+	<MenuSection />
+	<Gallery limit={6} />
+	<Testimonials />
+	<Info />
+	<ReservationForm />
+</Base>
